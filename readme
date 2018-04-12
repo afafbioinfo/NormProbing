@@ -1,0 +1,32 @@
+@ saaidi_LIX_2018
+Macro to parse QUshape output and generate reactivties in function of the nucleotide nature.
+
+Parameters can me modified via Macro_Qushape.Config
+
+[Conditions]
+Nucleotides: C,G
+# nucleotide nature to be considered for the normalization, nucleotides should be separated by','
+Lowervalue=-0.3 
+# The highest value for non validated reactivity value
+Threshold=0.2
+# The average distance between two values from individuel experiment.
+Desactiv_threshold=0.6
+# The reativity value from which the previous filetring by threshold is no more applied. 
+
+#############Rules for calculation:
+# if at least two values in the set are equal to -10 , return -10 as average value.
+# if only one value equals to -10 , the mean is calculated from the other remaining values 
+Get couple of 2 by 2 values then calculate their distance to chek if there is one distance above the 'Threshold'.
+This filter is applied only for values below 'Desactiv_threshold'.
+
+###################################################################################################################
+
+Input:  QU-shape-output folder, the required format for files is RNA_reagent_number.txt 
+       an example of input data (mSP rna with 3 probing data is provided)
+
+To launch the program: 
+python2.7 Macro_Qushape.py
+
+Output: 
+CE_reactivity_profiles contain the normalized reactivities for different experiments.
+Reactivity: contain final reactivities by RNA and reagent.

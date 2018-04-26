@@ -163,8 +163,8 @@ if __name__ == "__main__":
 		Rang[elem]= np.min([elem2 for (elem1,elem2) in Minimal_size if elem1.startswith(elem) ] )
                 with open( os.path.join(OutputFolder, elem[:-1] + '.shape'),'w') as o:
                         o.write("%s\t%s\t%s\t%s\t\n"%("SeqNum","SeqRNA","Reactivity","Ecart_Moyen"))
-                	for items in range(Rang[elem]):
+                	for items in range(max_end-min_start+1):
 				#print Data[elem+'1'][items][0],Data[elem+'1'][items][1],[Data[index][items][2] for index in Data.keys() if index.startswith(elem)],Mean_Meandeviation([Data[index][items][2] for index in Data.keys() if index.startswith(elem)])
-                         Mean_Mean=Mean_Meandeviation([Data[index][items][2] for index in Data.keys() if index.startswith(elem)],conf.Threshold,conf.Desactiv_threshold)
-                         o.write ("%i\t%s\t%f \t %f \t\n"%(Data[elem+'1'][items][0],Data[elem+'1'][items][1],Mean_Mean[0],Mean_Mean[1]))
+                         	Mean_Mean=Mean_Meandeviation([Data[index][items][2] for index in Data.keys() if index.startswith(elem)],conf.Threshold,conf.Desactiv_threshold)
+                         	o.write ("%i\t%s\t%f \t %f \t\n"%(Data[elem+'1'][items][0],Data[elem+'1'][items][1],Mean_Mean[0],Mean_Mean[1]))
 	print "Macro Qushape has run successfully"

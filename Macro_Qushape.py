@@ -143,28 +143,21 @@ if __name__ == "__main__":
         for elem in Data.keys():
                 ToAd=[]
                 ToAdend=[]
-		if Data[elem][0][0]>= min_start:		
-                        ToAd=[(int(SeqNume[i]),seqRNA[i],'NV') for i in range(Data[elem][0][0]-min_start) ]
+		if Data[elem][0][0]>= 1:		
+                        ToAd=[(i+1,'nct','NV') for i in range(Data[elem][0][0]-1) ]
 		Data[elem]=ToAd+Data[elem]
     
                 if Data[elem][-1][0]<= max_end:
-                	ToAdend =[(int(SeqNume[i]),seqRNA[i],'NV') for i in range(max_end-Data[elem][-1][0])]
-                                #print 
+                	ToAdend =[(i+1,'nct','NV') for i in range(max_end-Data[elem][-1][0])]
 		Data[elem]=Data[elem]+ToAdend
-        #print [Data[elem][0] for elem in Data.keys()]
-        #print [Data[elem][-1] for elem in Data.keys()]
-        # pre-processing when data have not the sam elength:
-	Rang=dict()
-        #print [len(Data[elem])for elem in Data.keys()]
-	#print Listref
+	
+   
         OutputFolder='Reactivity'
 	for elem in Listref:
-                # To normalize using the same size 
-		Rang[elem]= np.min([elem2 for (elem1,elem2) in Minimal_size if elem1.startswith(elem) ] )
                 with open( os.path.join(OutputFolder, elem[:-1] + '.shape'),'w') as o:
                         o.write("%s\t%s\t%s\t%s\t\n"%("SeqNum","SeqRNA","Reactivity","Ecart_Moyen"))
-                	for items in range(max_end-min_start+1):
-				#print Data[elem+'1'][items][0],Data[elem+'1'][items][1],[Data[index][items][2] for index in Data.keys() if index.startswith(elem)],Mean_Meandeviation([Data[index][items][2] for index in Data.keys() if index.startswith(elem)])
+                	for items in range(max_end):
                          	Mean_Mean=Mean_Meandeviation([Data[index][items][2] for index in Data.keys() if index.startswith(elem)],conf.Threshold,conf.Desactiv_threshold)
                          	o.write ("%i\t%s\t%f \t %f \t\n"%(Data[elem+'1'][items][0],Data[elem+'1'][items][1],Mean_Mean[0],Mean_Mean[1]))
+	
 	print "Macro Qushape has run successfully"

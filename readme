@@ -1,4 +1,4 @@
-@ saaidi_LIX_2018
+@ saaidi_LIX_2018, Updated October 2019
 Macro_CE allows to parse QUshape output and generate reactivties in function of the nucleotide nature.
 
 Parameters can be set/modified through the file Macro_Qushape.Config as follow:

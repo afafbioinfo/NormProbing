@@ -5,7 +5,9 @@ import sys
 config= SafeConfigParser()
 config.read("Macro_Qushape.Config")
 
+
 #Get parameters
+Task=config.get("Program","Task")
 Path=config.get("Paths","InputFile")
 OutputPath=config.get("Paths","Outputreactivityfile")
 FileExtension=config.get("Paths","Iofile_Extenstion")

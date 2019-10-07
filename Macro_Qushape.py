@@ -196,6 +196,6 @@ if __name__ == "__main__":
 
 					for items in range(Rang[elem]):
 
-							Mean_Mean=Mean_Meandeviation([Data[indexNucreadout][items][2] for indexNucreadout in Data.keys() if indexNucreadout.startswith(elem)],conf.Threshold,conf.Desactiv_threshold)
-				        o.write ("%i\t%s\t%f \t %f \t\n"%(Data[elem+'1'][items][0],Data[elem+'1'][items][1],Mean_Mean[0],Mean_Mean[1]))
+						Mean_Mean=Mean_Meandeviation([Data[indexNucreadout][items][2] for indexNucreadout in Data.keys() if indexNucreadout.startswith(elem)],conf.Threshold,conf.Desactiv_threshold)
+				        	o.write ("%i\t%s\t%f \t %f \t\n"%(Data[elem+'1'][items][0],Data[elem+'1'][items][1],Mean_Mean[0],Mean_Mean[1]))
 				print "Normalization and Reactivity calculation have been run successfully for",elem[:-1]

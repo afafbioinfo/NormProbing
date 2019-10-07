@@ -36,8 +36,8 @@ def parseFile(myFile):
 	myFile.close()
 	return SeqNume,seqRNA, areaRX, areaBG
 
-def Filter_Raws_Nucleotides(var1,var2,var3,var4,Selected_Nucleotide):
-	Positions=[i for i,j in enumerate(var2) if j.upper() in [x.upper() for x in Selected_Nucleotide] and j in ['A','U','C','G'] ]
+def Filter_Raws_Nucleotides(var1,var2,var3,var4,SelectedNuc):
+	Positions=[i for i,j in enumerate(var2) if j.upper() in [x.upper() for x in SelectedNuc] and j in ['A','U','C','G'] ]
 	return Positions
 
 def Mean_Meandeviation(List_reactiv,threshold,thresh_activ):
@@ -89,7 +89,12 @@ if __name__ == "__main__":
                 #print myFile
 		[SeqNume,seqRNA, areaRX, areaBG]=parseFile(myFile)
                 #print [SeqNume,seqRNA, areaRX, areaBG]
-	        index= Filter_Raws_Nucleotides(SeqNume,seqRNA, areaRX, areaBG,conf.Selected_Nucleotide)
+                if len([x.upper() for x in conf.SelectedNuc if x.upper() in ['A','U','C','G']])!=0 :
+                	Nucl=conf.SelectedNuc
+                else:
+			Nucl=["A","C","G","U"]
+                
+	        index= Filter_Raws_Nucleotides(SeqNume,seqRNA, areaRX, areaBG,Nucl)
                 #print SeqNume[0],SeqNume[-1]
                 Minimal_size.append((filz,len(SeqNume)))
 		# sort element from area BG
@@ -111,13 +116,31 @@ if __name__ == "__main__":
 		# get 10 %  of the maximal differences, 2 % are considered as outliers 
 		thresholdUp=np.percentile(sortedDiff, 98) 
 		thresholdDown=np.percentile(sortedDiff, 90)
-		# Calculate average from the interval between 98 and 90 percentile
-		normalizationTerm=np.average([sortedDiff[i] for i in range(len(sortedDiff)) if sortedDiff[i]<thresholdUp and sortedDiff[i]>thresholdDown])
+                # normalization with values between 
+                Percen75=np.percentile(sortedDiff, 75)
+                Percen25=np.percentile(sortedDiff, 25) 
+                DF=1.5*(Percen75-Percen25)
+		if len(SeqNume)<=300 or conf.Method=="Norm1":
+			# Calculate average from the interval between 98 and 90 percentile
+			normalizationTerm=np.average([sortedDiff[i] for i in range(len(sortedDiff)) if sortedDiff[i]<thresholdUp and sortedDiff[i]>thresholdDown])
+		if len(SeqNume)>300 or conf.Method=="Norm2":
+			# remove peaks with value above 75th percentile and 1.5(75th perc -25th perc)
+                        
+			AcceptedValues=[sortedDiff[i] for i in range(len(sortedDiff)) if sortedDiff[i]<DF]
+                        # 10% of the highest remining reactivities
+                        Perc=np.percentile(AcceptedValues, 90)
+			normalizationTerm=np.average([AcceptedValues[i] for i in range(len(AcceptedValues))  if AcceptedValues[i] > Perc ])
 		#calculate normalization_term
-                for i in index:
+                #1- specify the nucleotides to undergo the normalization
+                if len([x.upper() for x in conf.Nucreadout if x.upper() in ['A','U','C','G']])!=0 :
+                	Nuclreadout=conf.Nucreadout
+                else:
+			Nuclreadout=["A","C","G","U"]
+                indexNucreadout= Filter_Raws_Nucleotides(SeqNume,seqRNA, areaRX, areaBG,Nuclreadout)
+                for i in indexNucreadout:
 	    		NormDiff[i]= (areaRX[i]-areaBG[i])/normalizationTerm 
 		# Conditions on  Normdiff values <-10 takes as new value  -10,Normdiff between -10 and -0.3 becomes 0      
-		for i in index:
+		for i in indexNucreadout:
 			if NormDiff[i]<=-10:
 				NormDiff[i]=-10
 			if -10<NormDiff[i]<conf.Lowervalue:
@@ -126,7 +149,7 @@ if __name__ == "__main__":
 		with open( os.path.join(conf.OutputPath, filz + '.' + conf.FileExtension),'w') as o:
 			o.write("%s\t%s\t%s\t\n"%("SeqNum","SeqRNA","Normalized_reactivity"))
 			for i in range(len(SeqNume)):
-				if i in index:
+				if i in indexNucreadout:
 					o.write("%i\t%s\t%f\t\n"%(int(SeqNume[i]),seqRNA[i],float(NormDiff[i])))
 					Listinter.append((int(SeqNume[i]),seqRNA[i],float(NormDiff[i])))
                                 else:
@@ -143,21 +166,28 @@ if __name__ == "__main__":
         for elem in Data.keys():
                 ToAd=[]
                 ToAdend=[]
-		if Data[elem][0][0]>= 1:		
-                        ToAd=[(i+1,'nct','NV') for i in range(Data[elem][0][0]-1) ]
+		if Data[elem][0][0]>= min_start:		
+                        ToAd=[(int(SeqNume[i]),seqRNA[i],'NV') for i in range(Data[elem][0][0]-min_start) ]
 		Data[elem]=ToAd+Data[elem]
     
                 if Data[elem][-1][0]<= max_end:
-                	ToAdend =[(i+1,'nct','NV') for i in range(max_end-Data[elem][-1][0])]
+                	ToAdend =[(int(SeqNume[i]),seqRNA[i],'NV') for i in range(max_end-Data[elem][-1][0])]
+                                #print 
 		Data[elem]=Data[elem]+ToAdend
-	
-   
+        #print [Data[elem][0] for elem in Data.keys()]
+        #print [Data[elem][-1] for elem in Data.keys()]
+        # pre-processing when data have not the sam elength:
+	Rang=dict()
+        #print [len(Data[elem])for elem in Data.keys()]
+	#print Listref
         OutputFolder='Reactivity'
 	for elem in Listref:
+                # To normalize using the same size 
+		Rang[elem]= np.min([elem2 for (elem1,elem2) in Minimal_size if elem1.startswith(elem) ] )
                 with open( os.path.join(OutputFolder, elem[:-1] + '.shape'),'w') as o:
                         o.write("%s\t%s\t%s\t%s\t\n"%("SeqNum","SeqRNA","Reactivity","Ecart_Moyen"))
-                	for items in range(max_end):
-                         	Mean_Mean=Mean_Meandeviation([Data[index][items][2] for index in Data.keys() if index.startswith(elem)],conf.Threshold,conf.Desactiv_threshold)
-                         	o.write ("%i\t%s\t%f \t %f \t\n"%(Data[elem+'1'][items][0],Data[elem+'1'][items][1],Mean_Mean[0],Mean_Mean[1]))
-	
+                	for items in range(Rang[elem]):
+				#print Data[elem+'1'][items][0],Data[elem+'1'][items][1],[Data[index][items][2] for index in Data.keys() if index.startswith(elem)],Mean_Meandeviation([Data[index][items][2] for index in Data.keys() if index.startswith(elem)])
+                         Mean_Mean=Mean_Meandeviation([Data[indexNucreadout][items][2] for indexNucreadout in Data.keys() if indexNucreadout.startswith(elem)],conf.Threshold,conf.Desactiv_threshold)
+                         o.write ("%i\t%s\t%f \t %f \t\n"%(Data[elem+'1'][items][0],Data[elem+'1'][items][1],Mean_Mean[0],Mean_Mean[1]))
 	print "Macro Qushape has run successfully"

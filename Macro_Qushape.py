@@ -82,6 +82,7 @@ if __name__ == "__main__":
                 Listinter=[]
                 ListFile.append(filz)
                 Add_New_Element_ToList(filz.split('_')[0]+ '_'+ filz.split('_')[1]+ '_',Listref)
+                
 		#FileName=sys.argv[1]
 		myFile=open( os.path.join(conf.Path, filz + '.' + conf.FileExtension),'r')	
 		#Getlist(Path, fileextension):
@@ -160,6 +161,7 @@ if __name__ == "__main__":
 		Data[filz]=Listinter
                 #print filz, Listinter[0][0], Listinter[-1][0]
         #print [len(Data[elem])for elem in Data.keys()]
+        
         min_start=np.min([Data[elem][0][0] for elem in Data.keys()])
         #print min_start
         max_end=np.max([Data[elem][-1][0] for elem in Data.keys()])
@@ -174,20 +176,26 @@ if __name__ == "__main__":
                 	ToAdend =[(int(SeqNume[i]),seqRNA[i],'NV') for i in range(max_end-Data[elem][-1][0])]
                                 #print 
 		Data[elem]=Data[elem]+ToAdend
-        #print [Data[elem][0] for elem in Data.keys()]
-        #print [Data[elem][-1] for elem in Data.keys()]
-        # pre-processing when data have not the sam elength:
-	Rang=dict()
-        #print [len(Data[elem])for elem in Data.keys()]
-	#print Listref
-        OutputFolder='Reactivity'
-	for elem in Listref:
-                # To normalize using the same size 
-		Rang[elem]= np.min([elem2 for (elem1,elem2) in Minimal_size if elem1.startswith(elem) ] )
-                with open( os.path.join(OutputFolder, elem[:-1] + '.shape'),'w') as o:
-                        o.write("%s\t%s\t%s\t%s\t\n"%("SeqNum","SeqRNA","Reactivity","Ecart_Moyen"))
-                	for items in range(Rang[elem]):
-				#print Data[elem+'1'][items][0],Data[elem+'1'][items][1],[Data[index][items][2] for index in Data.keys() if index.startswith(elem)],Mean_Meandeviation([Data[index][items][2] for index in Data.keys() if index.startswith(elem)])
-                         Mean_Mean=Mean_Meandeviation([Data[indexNucreadout][items][2] for indexNucreadout in Data.keys() if indexNucreadout.startswith(elem)],conf.Threshold,conf.Desactiv_threshold)
-                         o.write ("%i\t%s\t%f \t %f \t\n"%(Data[elem+'1'][items][0],Data[elem+'1'][items][1],Mean_Mean[0],Mean_Mean[1]))
-	print "Macro Qushape has run successfully"
+        
+	print "Normalization has been run successfully" 
+	if int(conf.Task)==2 :
+                
+		Rang=dict()
+		#print [len(Data[elem])for elem in Data.keys()]
+		#print Listref
+		OutputFolder='Reactivity'
+		for elem in Listref:
+			if len([elem2 for (elem1,elem2) in Minimal_size if elem1.startswith(elem)])==1:
+				print "You need more input files to calculate the reactivity for ", elem[:-1]
+			else:
+				# To normalize using the same size 
+				Rang[elem]= np.min([elem2 for (elem1,elem2) in Minimal_size if elem1.startswith(elem) ] )
+				
+				with open( os.path.join(OutputFolder, elem[:-1] + '.shape'),'w') as o:
+				        o.write("%s\t%s\t%s\t%s\t\n"%("SeqNum","SeqRNA","Reactivity","Ecart_Moyen"))
+
+					for items in range(Rang[elem]):
+
+							Mean_Mean=Mean_Meandeviation([Data[indexNucreadout][items][2] for indexNucreadout in Data.keys() if indexNucreadout.startswith(elem)],conf.Threshold,conf.Desactiv_threshold)
+				        o.write ("%i\t%s\t%f \t %f \t\n"%(Data[elem+'1'][items][0],Data[elem+'1'][items][1],Mean_Mean[0],Mean_Mean[1]))
+				print "Normalization and Reactivity calculation have been run successfully for",elem[:-1]

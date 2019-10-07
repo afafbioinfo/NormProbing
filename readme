@@ -1,19 +1,46 @@
 @ saaidi_LIX_2018
-Macro to parse QUshape output and generate reactivties in function of the nucleotide nature.
+Macro_CE allows to parse QUshape output and generate reactivties in function of the nucleotide nature.
 
-Parameters can me modified via Macro_Qushape.Config
+Parameters can be set/modified through the file Macro_Qushape.Config as follow:
+
+[Program]
+Task: 2
+==> The program by default performs normalization
+if Task set to 2, the reactivity calculation is performed in addition.
+
+[Paths]
+InputFile: Qu-shape-output
+Iofile_Extenstion: txt
+Outputreactivityfile: CE_reactivity_profiles
+
+[Normalization]
+Method: 
+==> For short RNA (length<=300 bps) [resp.long RNA (length>300 bps] the Norm1 (Norm2) is set by default. 
+The user can also either choose Norm1 or Norm2.
+Norm1: The 2% of the most reactive peaks are removed. The normalization term correponds to the average
+of the next 8% of the most reactive peaks.
+Norm2: Quantile normalization
+Reactivity values above 1.5 times the interquartile range are removed.
+Then, the 10% of the highest remaining reactivities are averaged to serve as a nomalization term.
 
 [Conditions]
-Nucleotides: C,G
-# nucleotide nature to be considered for the normalization, nucleotides should be separated by','
-Lowervalue=-0.3 
-# The highest value for non validated reactivity value
-Threshold=0.2
-# The average distance between two values from individuel experiment.
-Desactiv_threshold=0.6
-# The reativity value from which the previous filetring by threshold is no more applied. 
+Nucleotides: G,C
+==> Specify nucleotides to be considered for the normalization, if empty all nuclotides are selected by default.
+ nucleotides should be separated by ','
+ 
+Nucreadout: A,C
+==> Specify the nucleotides to be read out, if empty the reactivity will be calculated for all nucleotides by default.
 
-#############Rules for calculation:
+Lowervalue: -0.3 
+==>The max value for null normalized values.
+
+Threshold=0.2
+==>The average distance between two values from individuel experiment.
+
+Desactiv_threshold=0.6
+==> The reativity value from which the previous filetring by threshold is no more applied. 
+
+############# Rules for reactivity calculation:
 # if at least two values in the set are equal to -10 , return -10 as average value.
 # if only one value equals to -10 , the mean is calculated from the other remaining values 
 Get couple of 2 by 2 values then calculate their distance to chek if there is one distance above the 'Threshold'.

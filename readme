@@ -6,7 +6,7 @@ Parameters can be set/modified through the file Macro_Qushape.Config as follow:
 [Program]
 Task: 2
 ==> The program by default performs normalization
-if Task set to 2, the reactivity calculation is performed in addition.
+if Task set to 2, the reactivity average calculation is performed in addition.
 
 [Paths]
 InputFile: Qu-shape-output

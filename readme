@@ -46,7 +46,7 @@ Desactiv_threshold=0.6
 ==> The reativity value from which the previous filetring by threshold is no more applied. 
 
 ############# Rules for reactivity calculation:
-# if at least two values in the set are equal to -10 , return -10 as average value.
+# if at least two values in the set are different from -10 , compute the average value. otherwise, return -10.
 # if only one value equals to -10 , the mean is calculated from the other remaining values 
 Get couple of 2 by 2 values then calculate their distance to chek if there is one distance above the 'Threshold'.
 This filter is applied only for values below 'Desactiv_threshold'.

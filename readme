@@ -13,6 +13,11 @@ InputFile: Qu-shape-output
 Iofile_Extenstion: txt
 Outputreactivityfile: CE_reactivity_profiles
 
+[Sequence]
+Start:1
+End:259
+==> Different experiments come with different ranges, specify one COMMON window for all the considered experiments.
+
 [Normalization]
 Method: 
 ==> For short RNA (length<=300 bps) [resp.long RNA (length>300 bps] the Norm1 (Norm2) is set by default. 

@@ -1,4 +1,4 @@
-@ saaidi_LIX_2018, Updated October 2019
+@ saaidi_LIX_2018
 
 # NormProbing
 

@@ -3,7 +3,7 @@ import sys
 
 #Connect to  the config file
 config= SafeConfigParser()
-config.read("Macro_Qushape.Config")
+config.read("NormProbing.Config")
 
 
 #Get parameters

@@ -43,15 +43,14 @@ Most configuration options are set by modifying the content of the `NormProbing.
 ### Main options
 
 
-`Program`: 
-Task: 2
-==> The program by default performs normalization
-if Task set to 2, the reactivity average calculation is performed in addition.
+`Task`: The default program performs normalization.
+If in addition `Task` is set to  2, the calculation of the reactivity average is carried out in addition.
 
-[Paths]
-InputFile: Qu-shape-output
-Iofile_Extenstion: txt
-Outputreactivityfile: CE_reactivity_profiles
+### Paths options
+
+`InputFile`: Main input directory 
+`Iofile_Extenstion`: txt
+`Outputreactivityfile`:  Main output directory 
 
 [Sequence]
 Start:1

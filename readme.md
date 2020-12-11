@@ -6,6 +6,9 @@ NormProbing is a code for parsing QuShape outputs.
 It computes and outputs normalized reactivity data while giving the user the possibility of choosing the nature of the nucleotides to be taken into account 
 for the normalization.
 
+## Dependencies
+      python 2.7
+      numpy
 
 ## Executing NormProbing
 

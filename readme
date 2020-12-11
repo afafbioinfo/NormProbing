@@ -1,6 +1,29 @@
 @ saaidi_LIX_2018, Updated October 2019
-Macro_CE allows to parse QUshape output and generate reactivties in function of the nucleotide nature.
 
+# NormProbing
+
+NormProbing is a code for parsing QuShape outputs.
+It computes and outputs normalized reactivity data while giving the user the possibility of choosing the nature of the nucleotides to be taken into account for the normalization.
+
+
+## Executing NormProbing
+
+NormProbing can be invoked through the command line: 
+
+      python2.7 NormProbing.py
+
+The method will run with a configuration specified within `NormProbing.Config` file as explained bellow.
+
+## Input files
+
+### QuShape output folder
+
+The required name/format for files is RNA_reagent_number.txt 
+
+**Example:**
+
+an example of input data (mSP rna with 3 probing data) is provided
+       
 Parameters can be set/modified through the file Macro_Qushape.Config as follow:
 
 [Program]
@@ -53,8 +76,7 @@ This filter is applied only for values below 'Desactiv_threshold'.
 
 ###################################################################################################################
 
-Input:  QU-shape-output folder, the required format for files is RNA_reagent_number.txt 
-       an example of input data (mSP rna with 3 probing data is provided)
+Input:  
 
 To launch the program: 
 python2.7 Macro_Qushape.py

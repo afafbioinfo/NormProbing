@@ -1,12 +1,12 @@
 @ saaidi_LIX_2018, Updated October 2019
 
-# NormProbing
+#NormProbing
 
 NormProbing is a code for parsing QuShape outputs.
 It computes and outputs normalized reactivity data while giving the user the possibility of choosing the nature of the nucleotides to be taken into account for the normalization.
 
 
-## Executing NormProbing
+##Executing NormProbing
 
 NormProbing can be invoked through the command line: 
 
@@ -14,9 +14,9 @@ NormProbing can be invoked through the command line:
 
 The method will run with a configuration specified within `NormProbing.Config` file as explained bellow.
 
-## Input files
+##Input files
 
-### QuShape output folder
+###QuShape output folder
 
 The required name/format for files is RNA_reagent_number.txt 
 

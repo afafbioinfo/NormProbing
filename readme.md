@@ -7,8 +7,8 @@ for the normalization.
 @saaidi_LIX_2018
 
 ## Dependencies
-      python 2.7
-      numpy
+      - python 2.7
+      - numpy
 
 ## Executing NormProbing
 
@@ -73,10 +73,9 @@ For the same RNA sequence, different experiments may cover different ranges of t
 
 The user can also either choose Norm1 or Norm2.
 
-      - *Norm1*: The 2% of the most reactive peaks are removed. The normalization term correponds to the average of the next 8% of the most reactive peaks.
+      - Norm1: The 2% of the most reactive peaks are removed. The normalization term correponds to the average of the next 8% of the most reactive peaks.
 
-      - *Norm2*: Quantile normalization; Reactivity values above 1.5 times the interquartile range are removed.
-Then, the 10% of the highest remaining reactivities are averaged to serve as a nomalization term.
+      - Norm2: Parametric normalization; Reactivity values above both 1.5 times the interquartile  range and the 75th percentile are removed. Then, the 10% of the highest remaining reactivities are averaged to serve as a nomalization term.
 
 ###  Conditions options
 

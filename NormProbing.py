@@ -42,9 +42,9 @@ def Filter_Raws_Nucleotides(var1,var2,var3,var4,SelectedNuc):
 
 def Mean_Meandeviation(List_reactiv,threshold,thresh_activ):
         Excluded=[elem for elem in List_reactiv if elem==-10 or elem=='NV']
-	print Excluded
+	#print Excluded
 	SET=list(set(List_reactiv)-set(Excluded))
-	print SET
+	#print SET
         Exclusion=0
 	if len(SET)<=1: # if only one value exists
 		return (-10,0) 
@@ -221,7 +221,7 @@ if __name__ == "__main__":
 										
 									indexation+=1
 						if len(Lista)>1:
-							print items,Lista
+							#print items,Lista
 							Mean_Mean=Mean_Meandeviation(Lista,conf.Threshold,conf.Desactiv_threshold)
 						else:
 							Mean_Mean=(-10,0)

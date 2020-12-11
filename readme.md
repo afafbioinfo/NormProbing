@@ -13,7 +13,7 @@ NormProbing can be invoked through the command line:
 
       python2.7 NormProbing.py
 
-The method will run with a configuration specified within `NormProbing.Config` file as explained bellow.
+The method will run with a configuration specified within `NormProbing.Config` as explained bellow.
 
 ## Input files
 
@@ -37,7 +37,13 @@ contains the normalized reactivities for different experiments.
 contains final normalized reactivities by RNA and by reagent.
 
 
-[Program]
+## Configuration
+Most configuration options are set by modifying the content of the `NormProbing.Config` file.
+
+### Main options
+
+
+`Program`: 
 Task: 2
 ==> The program by default performs normalization
 if Task set to 2, the reactivity average calculation is performed in addition.

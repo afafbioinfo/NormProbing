@@ -133,7 +133,7 @@ if __name__ == "__main__":
 		if len(SeqNume)>300 or conf.Method=="Norm2":
 			# remove peaks with value above 75th percentile and 1.5(75th perc -25th perc)
                         
-			AcceptedValues=[sortedDiff[i] for i in range(len(sortedDiff)) if sortedDiff[i]<DF]
+			AcceptedValues=[sortedDiff[i] for i in range(len(sortedDiff)) if (sortedDiff[i]<DF and sortedDiff[i]<Percen75 )]
                         # 10% of the highest remining reactivities
                         Perc=np.percentile(AcceptedValues, 90)
 			normalizationTerm=np.average([AcceptedValues[i] for i in range(len(AcceptedValues))  if AcceptedValues[i] > Perc ])

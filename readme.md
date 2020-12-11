@@ -23,9 +23,19 @@ The required name/format for files is RNA_reagent_number.txt
 
 **Example:**
 
-an example of input data [!mSP RNA probed with three reagents three times](https://github.com/afafbioinfo/Macro_CE/tree/master/Qu-shape-output) is provided 
+an example of input data: [mSP RNA probed with three reagents three times](https://github.com/afafbioinfo/Macro_CE/tree/master/Qu-shape-output) is provided 
        
 Parameters can be set/modified through the file Macro_Qushape.Config as follow:
+
+
+## Outputs
+
+###  CE_reactivity_profiles:
+contains the normalized reactivities for different experiments.
+
+#### Reactivity:
+contains final normalized reactivities by RNA and by reagent.
+
 
 [Program]
 Task: 2
@@ -77,11 +87,5 @@ This filter is applied only for values below 'Desactiv_threshold'.
 
 ###################################################################################################################
 
-Input:  
-
-To launch the program: 
-python2.7 Macro_Qushape.py
 
 Output: 
-CE_reactivity_profiles contain the normalized reactivities for different experiments.
-Reactivity: contain final reactivities by RNA and reagent.

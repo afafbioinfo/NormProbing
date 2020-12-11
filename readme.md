@@ -49,15 +49,20 @@ If in addition `Task` is set to  2, the calculation of the reactivity average is
 ### Paths options
 
 `InputFile`: Main input directory 
-`Iofile_Extenstion`: txt
+
+`Iofile_Extenstion`: format file in the input directory
+
 `Outputreactivityfile`:  Main output directory 
 
-[Sequence]
-Start:1
-End:259
-==> Different experiments come with different ranges, specify one COMMON window for all the considered experiments.
+### Sequence options
 
-[Normalization]
+For the same RNA sequence, different experiments may cover different ranges of the sequence. The following options guarantee a COMMON range for all the considered experiments.
+
+`Start`: Position of the first nucleotide to consider from the RNA sequence
+
+`End`:Position of the last nucleotide to consider from the RNA sequence
+
+### Normalization options
 Method: 
 ==> For short RNA (length<=300 bps) [resp.long RNA (length>300 bps] the Norm1 (Norm2) is set by default. 
 The user can also either choose Norm1 or Norm2.

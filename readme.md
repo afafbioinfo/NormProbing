@@ -30,10 +30,10 @@ Parameters can be set/modified through the file Macro_Qushape.Config as follow:
 
 ## Outputs
 
-###  CE_reactivity_profiles:
+###  CE_reactivity_profiles folder:
 contains the normalized reactivities for different experiments.
 
-#### Reactivity:
+#### Reactivity folder:
 contains final normalized reactivities by RNA and by reagent.
 
 

@@ -23,7 +23,7 @@ The required name/format for files is RNA_reagent_number.txt
 
 **Example:**
 
-an example of input data( (mSP RNA probed with three reagents three times)[https://github.com/afafbioinfo/Macro_CE/tree/master/Qu-shape-output]) is provided 
+an example of input data [!mSP RNA probed with three reagents three times](https://github.com/afafbioinfo/Macro_CE/tree/master/Qu-shape-output) is provided 
        
 Parameters can be set/modified through the file Macro_Qushape.Config as follow:
 

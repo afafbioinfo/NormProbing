@@ -87,8 +87,13 @@ if __name__ == "__main__":
         for filz in GetListFile(conf.Path, conf.FileExtension):
                 Listinter=[]
                 ListFile.append(filz)
-                Add_New_Element_ToList(filz.split('_')[0]+ '_'+ filz.split('_')[1]+ '_',Listref)
-                
+                try:
+                    Add_New_Element_ToList(filz.split('_')[0]+ '_'+ filz.split('_')[1]+ '_',Listref)
+                except:
+                    print("Error: Filename must have the following format: [RNAseqname]_[reagent]_[number].txt\n" \
+                          "Invalid format \"%s\"" % filz)
+                    sys.exit(1)
+
 		#FileName=sys.argv[1]
 		myFile=open( os.path.join(conf.Path, filz + '.' + conf.FileExtension),'r')	
 		#Getlist(Path, fileextension):
